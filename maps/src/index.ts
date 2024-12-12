@@ -1,6 +1,7 @@
 /// <reference types="@types/google.maps" />
-// import { User } from "./User";
-// import { Company } from "./Company";
+import { User } from "./User";
+import { Company } from "./Company";
+import { CustomMap } from "./CustomMap";
 
 // const person = new User();
 // const company = new Company();
@@ -17,10 +18,14 @@
 //   },
 // });
 
-import { CustomMap } from "./CustomMap";
-
 window.onload = () => {
-  new CustomMap("map");
-};
+  const user = new User();
+  const company = new Company();
+  const customMap = new CustomMap("map");
 
-console.log("LKdsjfl");
+  // customMap.addUserMarker(user);
+  // customMap.addCompanyMarker(company);
+
+  customMap.addMarker(user);
+  customMap.addMarker(company);
+};
