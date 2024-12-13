@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.NumberCollection = void 0;
-class NumberCollection {
+exports.NumbersCollection = void 0;
+class NumbersCollection {
     constructor(data) {
         this.data = data;
     }
@@ -17,4 +17,4 @@ class NumberCollection {
         this.data[rightIndex] = temp;
     }
 }
-exports.NumberCollection = NumberCollection;
+exports.NumbersCollection = NumbersCollection;
