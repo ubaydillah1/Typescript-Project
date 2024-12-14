@@ -76,6 +76,7 @@ export class LinkedList {
     rightNode.data = leftHand;
   }
 
+  // print
   print(): void {
     if (!this.head) {
       return;
