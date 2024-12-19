@@ -3,17 +3,14 @@ import { CsvFileReader } from "./CsvFileReader";
 import { ConsoleReport } from "./reportTargets/ConsoleReport";
 import { WinsAnalysis } from "./analyzers/WinsAnalysis";
 import { Summary } from "./Summary";
+import { HtmlReport } from "./reportTargets/HTMLReport";
 
 // Create object fit with interface
 
-const csvFileReader = new CsvFileReader("football.csv");
-
-const matchReader = new MatchReader(csvFileReader);
+// const csvFileReader = new CsvFileReader("football.csv");
+const matchReader = MatchReader.fromCsv("football.csv");
 matchReader.load();
 
-const summary = new Summary(
-  new WinsAnalysis("Man United"),
-  new ConsoleReport()
-);
-
+// const summary = Summary.winsAnalysisWithHtmlReport("Man United");
+const summary = Summary.winsAnalysisWithConsoleReport("Man United");
 summary.buildAndPrintReport(matchReader.matches);
