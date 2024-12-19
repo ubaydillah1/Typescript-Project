@@ -17,7 +17,7 @@ class WinsAnalysis {
                 wins++;
             }
         }
-        return "";
+        return `Team ${this.team} won ${wins} games`;
     }
 }
 exports.WinsAnalysis = WinsAnalysis;

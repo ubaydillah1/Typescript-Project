@@ -17,6 +17,6 @@ export class WinsAnalysis implements Analyzer {
         wins++;
       }
     }
-    return "";
+    return `Team ${this.team} won ${wins} games`;
   }
 }
