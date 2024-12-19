@@ -9,11 +9,16 @@ const matchReader = new MatchReader_1.MatchReader(csvFileReader);
 matchReader.load();
 let manUnitedWins = 0;
 for (let match of matchReader.matches) {
-    if (match[1] === "Man United" && match[5] === MatchResult_1.MatchResult.HomeWin) {
-        manUnitedWins++;
-    }
-    else if (match[2] === "Man United" && match[5] === MatchResult_1.MatchResult.AwayWin) {
-        manUnitedWins++;
-    }
+  if (
+    match[1] === "Man United" &&
+    match[5] === MatchResult_1.MatchResult.HomeWin
+  ) {
+    manUnitedWins++;
+  } else if (
+    match[2] === "Man United" &&
+    match[5] === MatchResult_1.MatchResult.AwayWin
+  ) {
+    manUnitedWins++;
+  }
 }
 console.log(`Man United ${manUnitedWins} won games`);
