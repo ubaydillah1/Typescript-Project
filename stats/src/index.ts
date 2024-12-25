@@ -3,7 +3,7 @@ import { CsvFileReader } from "./CsvFileReader";
 import { ConsoleReport } from "./reportTargets/ConsoleReport";
 import { WinsAnalysis } from "./analyzers/WinsAnalysis";
 import { Summary } from "./Summary";
-import { HtmlReport } from "./reportTargets/HTMLReport";
+import { HtmlReport } from "./reportTargets/HtmlReport";
 
 // Create object fit with interface
 
