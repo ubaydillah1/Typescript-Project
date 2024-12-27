@@ -1,23 +1,9 @@
 import { User } from "./models/User";
 
-const user = new User({ name: "Ubay Dillah", age: 19 });
+const user = new User({ id: 1 });
 
-// console.log(user.get("name"));
-// console.log(user.get("age"));
+user.fetch();
 
-// user.set({ age: 20 });
-
-// console.log(user.get("name"));
-// console.log(user.get("age"));
-
-user.on("change", () => {
-  console.log("Trigger 1");
-});
-user.on("change", () => {
-  console.log("Trigger 2");
-});
-user.on("save", () => {
-  console.log("Save was triggered");
-});
-
-user.trigger("change");
+setTimeout(() => {
+  console.log(user);
+}, 0);
