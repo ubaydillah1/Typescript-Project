@@ -598,12 +598,9 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"h7u1C":[function(require,module,exports,__globalThis) {
 var _user = require("./models/User");
 const user = new (0, _user.User)({
-    id: 1
+    name: "Ubay Dillah",
+    age: 19
 });
-user.fetch();
-setTimeout(()=>{
-    console.log(user);
-}, 0);
 
 },{"./models/User":"4rcHn"}],"4rcHn":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -614,7 +611,6 @@ var _axiosDefault = parcelHelpers.interopDefault(_axios);
 class User {
     constructor(data){
         this.data = data;
-        this.events = {};
     }
     get(propName) {
         return this.data[propName];
@@ -622,22 +618,15 @@ class User {
     set(update) {
         Object.assign(this.data, update);
     }
-    on(eventName, callback) {
-        const handlers = this.events[eventName] || [];
-        handlers.push(callback);
-        this.events[eventName] = handlers;
-    }
-    trigger(eventName) {
-        const handlers = this.events[eventName];
-        if (!handlers || handlers.length === 0) return;
-        handlers.forEach((callback)=>{
-            callback();
-        });
-    }
     fetch() {
         (0, _axiosDefault.default).get("http://localhost:3000/users/" + this.get("id")).then((response)=>{
             this.set(response.data);
         });
+    }
+    save() {
+        const id = this.get("id");
+        if (this.get("id")) (0, _axiosDefault.default).put(`http://localhost:3000/users/${id}`, this.data);
+        else (0, _axiosDefault.default).post("http://localhost:3000/users", this.data);
     }
 }
 
