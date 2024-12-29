@@ -3,89 +3,56 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Navbar with Pop-up Menu</title>
+    <title>Toggle Scroll</title>
     <style>
+      /* Tambahkan gaya dasar untuk halaman */
       body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
+        height: 200vh; /* Membuat halaman lebih tinggi agar bisa di-scroll */
       }
 
-      .navbar {
-        background-color: #333;
-        padding: 1rem;
-        display: flex;
-        justify-content: flex-end;
+      .disable-scroll {
+        overflow: hidden; /* Menonaktifkan scroll */
       }
 
-      .menu-button {
-        background-color: #4caf50;
+      .toggle-btn {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
         color: white;
         border: none;
-        padding: 10px 20px;
+        border-radius: 5px;
         cursor: pointer;
         font-size: 16px;
       }
 
-      .popup-menu {
-        position: absolute;
-        top: 60px;
-        right: 20px;
-        background-color: white;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        padding: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        transform: translateX(100%);
-        opacity: 0;
-        transition: transform 0.3s ease-out, opacity 0.3s ease-out;
-        pointer-events: none;
-      }
-
-      .popup-menu.show {
-        transform: translateX(0);
-        opacity: 1;
-        pointer-events: auto;
-      }
-
-      .popup-menu ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .popup-menu ul li {
-        padding: 10px 0;
-      }
-
-      .popup-menu ul li a {
-        color: #333;
-        text-decoration: none;
-      }
-
-      .popup-menu ul li a:hover {
-        color: #4caf50;
+      .toggle-btn:active {
+        background-color: #0056b3;
       }
     </style>
   </head>
   <body>
-    <nav class="navbar">
-      <button class="menu-button" onclick="toggleMenu()">Menu</button>
-    </nav>
+    <!-- Tombol untuk toggle scroll -->
+    <button class="toggle-btn" onclick="toggleScroll()">Toggle Scroll</button>
 
-    <div class="popup-menu" id="popupMenu">
-      <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Services</a></li>
-        <li><a href="#">Contact</a></li>
-      </ul>
+    <!-- Konten halaman -->
+    <div>
+      <h1>Halaman dengan Toggle Scroll</h1>
+      <p>
+        Scroll halaman ini untuk melihat efek toggle scroll. Klik tombol di atas
+        untuk menonaktifkan atau mengaktifkan scroll.
+      </p>
+      <p>Tambahkan konten di sini untuk mengisi halaman.</p>
     </div>
 
     <script>
-      function toggleMenu() {
-        const menu = document.getElementById("popupMenu");
-        menu.classList.toggle("show");
+      // Fungsi untuk men-toggle kelas 'disable-scroll'
+      function toggleScroll() {
+        document.body.classList.toggle("disable-scroll");
       }
     </script>
   </body>
