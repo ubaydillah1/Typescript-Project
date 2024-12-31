@@ -601,7 +601,10 @@ const user = new (0, _user.User)({
     name: "Ubay Dillah",
     age: 19
 });
-console.log(user);
+user.attributes.get("id");
+user.attributes.get("name");
+user.attributes.get("age");
+user.sync.save();
 
 },{"./models/User":"4rcHn"}],"4rcHn":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -609,22 +612,17 @@ parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "User", ()=>User);
 var _eventing = require("./Eventing");
 var _sync = require("./Sync");
+var _attributes = require("./Attributes");
 const rootUrl = "http://localhost:3000/users";
 class User {
-    constructor(data){
-        this.data = data;
+    constructor(attrs){
         this.events = new (0, _eventing.Eventing)();
         this.sync = new (0, _sync.Sync)(rootUrl);
-    }
-    get(propName) {
-        return this.data[propName];
-    }
-    set(update) {
-        Object.assign(this.data, update);
+        this.attributes = new (0, _attributes.Attributes)(attrs);
     }
 }
 
-},{"./Eventing":"7459s","./Sync":"QO3Gl","@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"7459s":[function(require,module,exports,__globalThis) {
+},{"./Eventing":"7459s","./Sync":"QO3Gl","@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV","./Attributes":"6Bbds"}],"7459s":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Eventing", ()=>Eventing);
@@ -5610,6 +5608,22 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
     HttpStatusCode[value] = key;
 });
 exports.default = HttpStatusCode;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"6Bbds":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Attributes", ()=>Attributes);
+class Attributes {
+    constructor(data){
+        this.data = data;
+    }
+    get(key) {
+        return this.data[key];
+    }
+    set(update) {
+        Object.assign(this.data, update);
+    }
+}
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}]},["6i9Ko","h7u1C"], "h7u1C", "parcelRequire94c2")
 

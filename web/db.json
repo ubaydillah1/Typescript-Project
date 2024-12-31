@@ -1,12 +1,3 @@
 {
-  "users": [
-    {
-      "id": 1
-    },
-    {
-      "name": "Ubay Dillah",
-      "age": 19,
-      "id": 3
-    }
-  ]
+  "users": []
 }
