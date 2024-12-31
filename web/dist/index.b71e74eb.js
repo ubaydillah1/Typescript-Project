@@ -601,6 +601,7 @@ const user = new (0, _user.User)({
     name: "Ubay Dillah",
     age: 19
 });
+console.log(user);
 
 },{"./models/User":"4rcHn"}],"4rcHn":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -623,7 +624,29 @@ class User {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV","./Eventing":"7459s","./Sync":"QO3Gl"}],"4TSZV":[function(require,module,exports,__globalThis) {
+},{"./Eventing":"7459s","./Sync":"QO3Gl","@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"7459s":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Eventing", ()=>Eventing);
+class Eventing {
+    on(eventName, callback) {
+        const handlers = this.events[eventName] || [];
+        handlers.push(callback);
+        this.events[eventName] = handlers;
+    }
+    trigger(eventName) {
+        const handlers = this.events[eventName];
+        if (!handlers || handlers.length === 0) return;
+        handlers.forEach((callback)=>{
+            callback();
+        });
+    }
+    constructor(){
+        this.events = {};
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"4TSZV":[function(require,module,exports,__globalThis) {
 exports.interopDefault = function(a) {
     return a && a.__esModule ? a : {
         default: a
@@ -653,29 +676,7 @@ exports.export = function(dest, destName, get) {
     });
 };
 
-},{}],"7459s":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Eventing", ()=>Eventing);
-class Eventing {
-    on(eventName, callback) {
-        const handlers = this.events[eventName] || [];
-        handlers.push(callback);
-        this.events[eventName] = handlers;
-    }
-    trigger(eventName) {
-        const handlers = this.events[eventName];
-        if (!handlers || handlers.length === 0) return;
-        handlers.forEach((callback)=>{
-            callback();
-        });
-    }
-    constructor(){
-        this.events = {};
-    }
-}
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"QO3Gl":[function(require,module,exports,__globalThis) {
+},{}],"QO3Gl":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Sync", ()=>Sync);
@@ -685,7 +686,7 @@ class Sync {
     constructor(rootUrl){
         this.rootUrl = rootUrl;
     }
-    fetch(id, data) {
+    fetch(id) {
         return (0, _axiosDefault.default).get(this.rootUrl + "/" + id);
     }
     save(data) {
