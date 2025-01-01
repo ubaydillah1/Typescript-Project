@@ -1,9 +1,11 @@
 import { User } from "./models/User";
 
-const user = new User({ name: "Ubay Dillah", age: 19 });
+const user = new User({ name: "Adrien", age: 20 });
 
-user.attributes.get("id");
-user.attributes.get("name");
-user.attributes.get("age");
+user.on("change", () => {
+  console.log(user);
+});
 
-user.sync.save();
+user.on("save", () => {
+  console.log("Data succesfully saved");
+});

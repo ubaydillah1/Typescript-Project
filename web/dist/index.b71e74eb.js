@@ -598,13 +598,15 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 },{}],"h7u1C":[function(require,module,exports,__globalThis) {
 var _user = require("./models/User");
 const user = new (0, _user.User)({
-    name: "Ubay Dillah",
-    age: 19
+    name: "Adrien",
+    age: 20
 });
-user.attributes.get("id");
-user.attributes.get("name");
-user.attributes.get("age");
-user.sync.save();
+user.on("change", ()=>{
+    console.log(user);
+});
+user.on("save", ()=>{
+    console.log("Data succesfully saved");
+});
 
 },{"./models/User":"4rcHn"}],"4rcHn":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
@@ -620,27 +622,55 @@ class User {
         this.sync = new (0, _sync.Sync)(rootUrl);
         this.attributes = new (0, _attributes.Attributes)(attrs);
     }
+    get on() {
+        return this.events.on;
+    }
+    get trigger() {
+        return this.events.trigger;
+    }
+    get get() {
+        return this.attributes.get;
+    }
+    set(update) {
+        this.attributes.set(update);
+        this.events.trigger("change");
+    }
+    fetch() {
+        const id = this.get("id");
+        if (typeof id !== "number") throw new Error("Cannot fetch without an id");
+        this.sync.fetch(id).then((res)=>{
+            this.set(res.data);
+        });
+    }
+    save() {
+        const data = this.attributes.getAll();
+        this.sync.save(data).then((res)=>{
+            this.trigger("save");
+        }).catch((err)=>{
+            console.log("Error caught : " + err.message);
+        });
+    }
 }
 
-},{"./Eventing":"7459s","./Sync":"QO3Gl","@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV","./Attributes":"6Bbds"}],"7459s":[function(require,module,exports,__globalThis) {
+},{"./Eventing":"7459s","./Sync":"QO3Gl","./Attributes":"6Bbds","@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"7459s":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Eventing", ()=>Eventing);
 class Eventing {
-    on(eventName, callback) {
-        const handlers = this.events[eventName] || [];
-        handlers.push(callback);
-        this.events[eventName] = handlers;
-    }
-    trigger(eventName) {
-        const handlers = this.events[eventName];
-        if (!handlers || handlers.length === 0) return;
-        handlers.forEach((callback)=>{
-            callback();
-        });
-    }
     constructor(){
         this.events = {};
+        this.on = (eventName, callback)=>{
+            const handlers = this.events[eventName] || [];
+            handlers.push(callback);
+            this.events[eventName] = handlers;
+        };
+        this.trigger = (eventName)=>{
+            const handlers = this.events[eventName];
+            if (!handlers || handlers.length === 0) return;
+            handlers.forEach((callback)=>{
+                callback();
+            });
+        };
     }
 }
 
@@ -5616,12 +5646,15 @@ parcelHelpers.export(exports, "Attributes", ()=>Attributes);
 class Attributes {
     constructor(data){
         this.data = data;
-    }
-    get(key) {
-        return this.data[key];
+        this.get = (key)=>{
+            return this.data[key];
+        };
     }
     set(update) {
         Object.assign(this.data, update);
+    }
+    getAll() {
+        return this.data;
     }
 }
 
