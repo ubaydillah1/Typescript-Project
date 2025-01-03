@@ -597,30 +597,72 @@ function hmrAccept(bundle /*: ParcelRequire */ , id /*: string */ ) {
 
 },{}],"h7u1C":[function(require,module,exports,__globalThis) {
 var _user = require("./models/User");
-const user = new (0, _user.User)({
-    name: "Adrien",
-    age: 20
+const user = (0, _user.User).build({
+    id: 1
 });
 user.on("change", ()=>{
+    console.log("Successfully Fetched");
     console.log(user);
 });
 user.on("save", ()=>{
     console.log("Data succesfully saved");
 });
+user.fetch();
 
 },{"./models/User":"4rcHn"}],"4rcHn":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "User", ()=>User);
-var _eventing = require("./Eventing");
-var _sync = require("./Sync");
+var _model = require("./Model");
 var _attributes = require("./Attributes");
+var _apiSync = require("./ApiSync");
+var _eventing = require("./Eventing");
 const rootUrl = "http://localhost:3000/users";
-class User {
-    constructor(attrs){
-        this.events = new (0, _eventing.Eventing)();
-        this.sync = new (0, _sync.Sync)(rootUrl);
-        this.attributes = new (0, _attributes.Attributes)(attrs);
+class User extends (0, _model.Model) {
+    static build(attrs) {
+        return new User(new (0, _attributes.Attributes)(attrs), new (0, _eventing.Eventing)(), new (0, _apiSync.ApiSync)(rootUrl));
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV","./Model":"f033k","./Attributes":"6Bbds","./Eventing":"7459s","./ApiSync":"3wylh"}],"4TSZV":[function(require,module,exports,__globalThis) {
+exports.interopDefault = function(a) {
+    return a && a.__esModule ? a : {
+        default: a
+    };
+};
+exports.defineInteropFlag = function(a) {
+    Object.defineProperty(a, '__esModule', {
+        value: true
+    });
+};
+exports.exportAll = function(source, dest) {
+    Object.keys(source).forEach(function(key) {
+        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
+        Object.defineProperty(dest, key, {
+            enumerable: true,
+            get: function() {
+                return source[key];
+            }
+        });
+    });
+    return dest;
+};
+exports.export = function(dest, destName, get) {
+    Object.defineProperty(dest, destName, {
+        enumerable: true,
+        get: get
+    });
+};
+
+},{}],"f033k":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Model", ()=>Model);
+class Model {
+    constructor(attributes, events, sync){
+        this.attributes = attributes;
+        this.events = events;
+        this.sync = sync;
     }
     get on() {
         return this.events.on;
@@ -652,7 +694,26 @@ class User {
     }
 }
 
-},{"./Eventing":"7459s","./Sync":"QO3Gl","./Attributes":"6Bbds","@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"7459s":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"6Bbds":[function(require,module,exports,__globalThis) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Attributes", ()=>Attributes);
+class Attributes {
+    constructor(data){
+        this.data = data;
+        this.get = (key)=>{
+            return this.data[key];
+        };
+    }
+    set(update) {
+        Object.assign(this.data, update);
+    }
+    getAll() {
+        return this.data;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"7459s":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Eventing", ()=>Eventing);
@@ -674,43 +735,13 @@ class Eventing {
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"4TSZV":[function(require,module,exports,__globalThis) {
-exports.interopDefault = function(a) {
-    return a && a.__esModule ? a : {
-        default: a
-    };
-};
-exports.defineInteropFlag = function(a) {
-    Object.defineProperty(a, '__esModule', {
-        value: true
-    });
-};
-exports.exportAll = function(source, dest) {
-    Object.keys(source).forEach(function(key) {
-        if (key === 'default' || key === '__esModule' || Object.prototype.hasOwnProperty.call(dest, key)) return;
-        Object.defineProperty(dest, key, {
-            enumerable: true,
-            get: function() {
-                return source[key];
-            }
-        });
-    });
-    return dest;
-};
-exports.export = function(dest, destName, get) {
-    Object.defineProperty(dest, destName, {
-        enumerable: true,
-        get: get
-    });
-};
-
-},{}],"QO3Gl":[function(require,module,exports,__globalThis) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"3wylh":[function(require,module,exports,__globalThis) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Sync", ()=>Sync);
+parcelHelpers.export(exports, "ApiSync", ()=>ApiSync);
 var _axios = require("axios");
 var _axiosDefault = parcelHelpers.interopDefault(_axios);
-class Sync {
+class ApiSync {
     constructor(rootUrl){
         this.rootUrl = rootUrl;
     }
@@ -5638,25 +5669,6 @@ Object.entries(HttpStatusCode).forEach(([key, value])=>{
     HttpStatusCode[value] = key;
 });
 exports.default = HttpStatusCode;
-
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}],"6Bbds":[function(require,module,exports,__globalThis) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Attributes", ()=>Attributes);
-class Attributes {
-    constructor(data){
-        this.data = data;
-        this.get = (key)=>{
-            return this.data[key];
-        };
-    }
-    set(update) {
-        Object.assign(this.data, update);
-    }
-    getAll() {
-        return this.data;
-    }
-}
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"4TSZV"}]},["6i9Ko","h7u1C"], "h7u1C", "parcelRequire94c2")
 
