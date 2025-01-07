@@ -1,0 +1,4 @@
+*node_modules
+maps/.parcel-cache/data.mdb
+*.parcel-cache
+*dist

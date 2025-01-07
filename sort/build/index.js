@@ -1,0 +1,35 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+// import { Sorter } from "./Sorter";
+const NumbersCollection_1 = require("./NumbersCollection");
+const CharactersCollection_1 = require("./CharactersCollection");
+const LinkedList_1 = require("./LinkedList");
+// const numbersCollection = new NumbersCollection([5, 3, 8, 4, 2]);
+// const charactersCollection = new CharactersCollection("Xaaaa");
+// const sorterNumbers = new Sorter(numbersCollection);
+// const sorterCharacters = new Sorter(charactersCollection);
+// sorterNumbers.sort();
+// sorterCharacters.sort();
+// console.log(numbersCollection.data);
+// console.log(charactersCollection.data);
+// Before abstract
+// const linkedLIst = new LinkedList();
+// linkedLIst.add(50);
+// linkedLIst.add(100);
+// linkedLIst.add(-20);
+// const sorter = new Sorter(linkedLIst);
+// sorter.sort();
+// linkedLIst.print();
+// After
+const linkedLIst = new LinkedList_1.LinkedList();
+linkedLIst.add(50);
+linkedLIst.add(100);
+linkedLIst.add(-20);
+linkedLIst.sort();
+linkedLIst.print();
+const numbersCollection = new NumbersCollection_1.NumbersCollection([5, 3, 8, 4, 2]);
+const charactersCollection = new CharactersCollection_1.CharactersCollection("Xaaaa");
+numbersCollection.sort();
+charactersCollection.sort();
+console.log(numbersCollection.data);
+console.log(charactersCollection.data);
