@@ -6,8 +6,7 @@ interface RequestWithBody extends Request {
 
 function requireAuth(req: Request, res: Response, next: NextFunction): void {
   if (req.session && req.session.loggedIn) {
-    next();
-    return;
+    return next();
   }
 
   res.status(403);
