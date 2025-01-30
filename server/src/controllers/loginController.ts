@@ -1,12 +1,12 @@
 import { Request, Response } from "express";
-import { get, controller } from "./decorators";
+import { get, controller, bodyValidator, post } from "./decorators";
 
 @controller("/auth")
 class LoginController {
   @get("/login")
   getLogin(req: Request, res: Response): void {
     res.send(`
-            <form method="POST">
+            <form method="POST" action="/auth/login">
                 <div>
                     <label>Email</label>
                     <input name="email"/>
@@ -20,17 +20,28 @@ class LoginController {
             </form>
         `);
   }
+
+  @post("/login")
+  @bodyValidator("email", "password")
+  postLogin(req: Request, res: Response) {
+    const { email, password } = req.body;
+
+    if (
+      email &&
+      password &&
+      email === "ubay@gmail.com" &&
+      password === "password"
+    ) {
+      req.session = { loggedIn: true };
+      res.redirect("/");
+    } else {
+      res.send("Invalid Email or Password");
+    }
+  }
+
+  @get("/logout")
+  getLogout(req: Request, res: Response) {
+    req.session = undefined;
+    res.redirect("/");
+  }
 }
-
-// src/controllers/decorators/controller.ts
-
-// for (let key in target.prototype) {
-//   const routeHandler = target.prototype[key];
-//   const path = Reflect.getMetadata('path', target.prototype, key);
-// }
-// Change to:
-
-// Object.getOwnPropertyNames(target.prototype).forEach((key) => {
-//   const routeHandler = target.prototype[key];
-//   const path = Reflect.getMetadata('path', target.prototype, key);
-// });
