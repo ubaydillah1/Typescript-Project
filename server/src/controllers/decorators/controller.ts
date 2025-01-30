@@ -1,7 +1,6 @@
 import "reflect-metadata";
-import express from "express";
-
-export const router = express.Router();
+import { AppRouter } from "../../appRouter";
+const router = AppRouter.getInstance();
 
 export function controller(routePrefix: string) {
   return function (target: Function) {
