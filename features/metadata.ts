@@ -47,5 +47,5 @@ function controller(target: typeof Plane) {
 
       console.log(secret);
     }
-  }         
+  }
 }

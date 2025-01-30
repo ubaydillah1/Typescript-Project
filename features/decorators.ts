@@ -25,7 +25,9 @@ function testDecorators(target: any, key: string) {
 }
 
 function classConstructor(constructor: typeof Boat) {
-  console.log(constructor);
+  console.log(
+    "constructor : " + Object.getOwnPropertyNames(constructor.prototype)
+  );
 }
 
 function logError(errorMessage: string) {
