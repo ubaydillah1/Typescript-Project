@@ -1,6 +1,5 @@
 import { Collection } from "./models/Collection";
 import { User, UserProps } from "./models/User";
-import { UserEdit } from "./views/UserEdit";
 import { UserList } from "./views/UserList";
 
 // const user = User.build({ name: "Adrien", age: 20 });
