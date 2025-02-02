@@ -1,0 +1,10 @@
+body {
+  background: #f1f1f1;
+  margin-bottom: 200px;
+  padding: 5px;
+  font-family: sans-serif;
+}
+
+* {
+  font-size: large;
+}
